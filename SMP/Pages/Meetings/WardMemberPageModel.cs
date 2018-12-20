@@ -16,9 +16,9 @@ namespace SMP.Pages.Meetings
         public void PopulateWardMembersDropDownList(Planner1Context _context,
             object selectedWardMember = null)
         {
-            var wardMembersQuery = from d in _context.WardMember
-                                   orderby d.FirstName // Sort by name.
-                                   select d;
+            var wardMembersQuery = from w in _context.WardMember
+                                   orderby w.FirstName // Sort by name.
+                                   select w;
 
             WardMemberNameSL = new SelectList(wardMembersQuery.AsNoTracking(),
                         "FirstName", "Name", selectedWardMember);
