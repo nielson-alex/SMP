@@ -1,8 +1,18 @@
 ﻿@page
 @model SMP.Pages.Meetings.EditModel
+@using System.Linq;
+@using System.Text;
+@using System.Data.SqlClient;
 
 @{
     ViewData["Title"] = "Edit";
+
+    StringBuilder sb = new StringBuilder();
+    sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_Bishopric\" name=\"Meeting.Bishopric\">");
+    string myConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Planner1Context-88460045-59d6-4182-842b-acf580f00e0e;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+    SqlConnection con = new SqlConnection(myConnectionString);
+    SqlCommand cmd = new SqlCommand();
+    SqlDataReader reader;
 }
 
 <h2>Edit</h2>
@@ -16,77 +26,296 @@
             <input type="hidden" asp-for="Meeting.ID" />
             <div class="form-group">
                 <label asp-for="Meeting.Bishopric" class="control-label"></label>
-                <input asp-for="Meeting.Bishopric" class="form-control" />
+                <input asp-for="Meeting.Bishopric" class="form-control" disabled="disabled" />
+                @{
+                    sb.Clear();
+                    sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_Bishopric\" name=\"Meeting.Bishopric\">");
+                    con = new SqlConnection(myConnectionString);
+                    cmd = new SqlCommand();
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.CommandText = @"
+                                                select      *
+                                                from        [dbo].[WardMember]
+                                                where       IsBishopricMember = 'Yes'
+                                                order by    LastName
+                            ";
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        sb.Append("<option value=\"" + reader["FirstName"].ToString() + " " + reader["LastName"].ToString() + "\">" + reader["FirstName"].ToString() + " " + reader["LastName"].ToString() + " " + "(" + reader["Calling"].ToString() + ")</option>");
+                    }
+                    reader.Close();
+                    con.Close();
+                    sb.Append("</select>");
+
+                    var ddlPresiding = Html.Raw(sb.ToString());
+                }
+                @ddlPresiding
                 <span asp-validation-for="Meeting.Bishopric" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.OpeningPrayer" class="control-label"></label>
-                <input asp-for="Meeting.OpeningPrayer" class="form-control" />
+                <input asp-for="Meeting.OpeningPrayer" class="form-control" disabled="disabled" />
+                @{
+                    sb.Clear();
+                    sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_OpeningPrayer\" name=\"Meeting.OpeningPrayer\">");
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.CommandText = @"
+                                                select      *
+                                                from        [dbo].[WardMember]
+                                                order by    LastName
+                            ";
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        sb.Append("<option value=\"" + reader["FirstName"].ToString() + " " + reader["LastName"].ToString() + "\">" + reader["FirstName"].ToString() + " " + reader["LastName"].ToString() + "</option>");
+                    }
+                    reader.Close();
+                    con.Close();
+                    sb.Append("</select>");
+                    var ddlOpeningPrayer = Html.Raw(sb.ToString());
+                }
+                @ddlOpeningPrayer
                 <span asp-validation-for="Meeting.OpeningPrayer" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.DateUpdated" class="control-label"></label>
-                <input asp-for="Meeting.DateUpdated" class="form-control" />
+                <input asp-for="Meeting.DateUpdated" class="form-control" disabled="disabled" />
+                <input asp-for="Meeting.DateUpdated" class="form-control" value="@DateTime.Now" type="datetime-local" disabled="disabled" />
                 <span asp-validation-for="Meeting.DateUpdated" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.MeetingDate" class="control-label"></label>
-                <input asp-for="Meeting.MeetingDate" class="form-control" />
+                <input asp-for="Meeting.MeetingDate" class="form-control" disabled="disabled" />
+                <input asp-for="Meeting.MeetingDate" class="form-control" type="datetime" />
                 <span asp-validation-for="Meeting.MeetingDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.OpeningSong" class="control-label"></label>
-                <input asp-for="Meeting.OpeningSong" class="form-control" />
+                <input asp-for="Meeting.OpeningSong" class="form-control" disabled="disabled" />
+                @{
+                    sb.Clear();
+                    sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_OpeningSong\" name=\"Meeting.OpeningSong\">");
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.CommandText = @"
+                                                select      *
+                                                from        [dbo].[Hymn]
+                                                order by    Number
+                            ";
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        sb.Append("<option value=\"" + reader["Title"].ToString() + "\">" + reader["Number"].ToString() + ". " + reader["Title"].ToString() + "</option>");
+                    }
+                    reader.Close();
+                    con.Close();
+                    sb.Append("</select>");
+                    var ddlOpeningSong = Html.Raw(sb.ToString());
+                }
+                @ddlOpeningSong
                 <span asp-validation-for="Meeting.OpeningSong" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.SacramentSong" class="control-label"></label>
-                <input asp-for="Meeting.SacramentSong" class="form-control" />
+                <input asp-for="Meeting.SacramentSong" class="form-control" disabled="disabled" />
+                @{
+                    sb.Clear();
+                    sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_SacramentSong\" name=\"Meeting.SacramentSong\">");
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.CommandText = @"
+                                                select      *
+                                                from        [dbo].[Hymn]
+                                                order by    Number
+                            ";
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        sb.Append("<option value=\"" + reader["Title"].ToString() + "\">" + reader["Number"].ToString() + ". " + reader["Title"].ToString() + "</option>");
+                    }
+                    reader.Close();
+                    con.Close();
+                    sb.Append("</select>");
+                    var ddlSacramentSong = Html.Raw(sb.ToString());
+                }
+                @ddlSacramentSong
                 <span asp-validation-for="Meeting.SacramentSong" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.Speaker1" class="control-label"></label>
-                <input asp-for="Meeting.Speaker1" class="form-control" />
+                <input asp-for="Meeting.Speaker1" class="form-control" disabled="disabled" />
+                @{
+                    sb.Clear();
+                    sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_Speaker1\" name=\"Meeting.Speaker1\">");
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.CommandText = @"
+                                                select      *
+                                                from        [dbo].[WardMember]
+                                                order by    LastName
+                            ";
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        sb.Append("<option value=\"" + reader["FirstName"].ToString() + " " + reader["LastName"].ToString() + "\">" + reader["FirstName"].ToString() + " " + reader["LastName"].ToString() + "</option>");
+                    }
+                    reader.Close();
+                    con.Close();
+                    sb.Append("</select>");
+                    var ddlSpeaker1 = Html.Raw(sb.ToString());
+                }
+                @ddlSpeaker1
                 <span asp-validation-for="Meeting.Speaker1" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.Subject1" class="control-label"></label>
+                <input asp-for="Meeting.Subject1" class="form-control" disabled="disabled" />
                 <input asp-for="Meeting.Subject1" class="form-control" />
                 <span asp-validation-for="Meeting.Subject1" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.Speaker2" class="control-label"></label>
-                <input asp-for="Meeting.Speaker2" class="form-control" />
+                <input asp-for="Meeting.Speaker2" class="form-control" disabled="disabled" />
+                @{
+                    sb.Clear();
+                    sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_Speaker2\" name=\"Meeting.Speaker2\">");
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.CommandText = @"
+                                                select      *
+                                                from        [dbo].[WardMember]
+                                                order by    LastName
+                            ";
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        sb.Append("<option value=\"" + reader["FirstName"].ToString() + " " + reader["LastName"].ToString() + "\">" + reader["FirstName"].ToString() + " " + reader["LastName"].ToString() + "</option>");
+                    }
+                    reader.Close();
+                    con.Close();
+                    sb.Append("</select>");
+                    var ddlSpeaker2 = Html.Raw(sb.ToString());
+                }
+                @ddlSpeaker2
                 <span asp-validation-for="Meeting.Speaker2" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.Subject2" class="control-label"></label>
+                <input asp-for="Meeting.Subject2" class="form-control" disabled="disabled" />
                 <input asp-for="Meeting.Subject2" class="form-control" />
                 <span asp-validation-for="Meeting.Subject2" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.IntermediateSong" class="control-label"></label>
-                <input asp-for="Meeting.IntermediateSong" class="form-control" />
+                <input asp-for="Meeting.IntermediateSong" class="form-control" disabled="disabled" />
+                @{
+                    sb.Clear();
+                    sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_ClosingSong\" name=\"Meeting.ClosingSong\">");
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.CommandText = @"
+                                                        select      *
+                                                        from        [dbo].[Hymn]
+                                                        order by    Number
+                                    ";
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        sb.Append("<option value=\"" + reader["Title"].ToString() + "\">" + reader["Number"].ToString() + ". " + reader["Title"].ToString() + "</option>");
+                    }
+                    reader.Close();
+                    con.Close();
+                    sb.Append("</select>");
+                    var ddlIntermediateSong = Html.Raw(sb.ToString());
+                }
+                @ddlIntermediateSong
                 <span asp-validation-for="Meeting.IntermediateSong" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.Speaker3" class="control-label"></label>
-                <input asp-for="Meeting.Speaker3" class="form-control" />
+                <input asp-for="Meeting.Speaker3" class="form-control" disabled="disabled" />
+                @{
+                    sb.Clear();
+                    sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_Speaker3\" name=\"Meeting.Speaker3\">");
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.CommandText = @"
+                                                select      *
+                                                from        [dbo].[WardMember]
+                                                order by    LastName
+                            ";
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        sb.Append("<option value=\"" + reader["FirstName"].ToString() + " " + reader["LastName"].ToString() + "\">" + reader["FirstName"].ToString() + " " + reader["LastName"].ToString() + "</option>");
+                    }
+                    reader.Close();
+                    con.Close();
+                    sb.Append("</select>");
+                    var ddlSpeaker3 = Html.Raw(sb.ToString());
+                }
+                @ddlSpeaker3
                 <span asp-validation-for="Meeting.Speaker3" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.Subject3" class="control-label"></label>
+                <input asp-for="Meeting.Subject3" class="form-control" disabled="disabled" />
                 <input asp-for="Meeting.Subject3" class="form-control" />
                 <span asp-validation-for="Meeting.Subject3" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.ClosingSong" class="control-label"></label>
-                <input asp-for="Meeting.ClosingSong" class="form-control" />
+                <input asp-for="Meeting.ClosingSong" class="form-control" disabled="disabled" />
+                @{
+                    sb.Clear();
+                    sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_ClosingSong\" name=\"Meeting.ClosingSong\">");
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.CommandText = @"
+                                                select      *
+                                                from        [dbo].[Hymn]
+                                                order by    Number
+                            ";
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        sb.Append("<option value=\"" + reader["Title"].ToString() + "\">" + reader["Number"].ToString() + ". " + reader["Title"].ToString() + "</option>");
+                    }
+                    reader.Close();
+                    con.Close();
+                    sb.Append("</select>");
+                    var ddlClosingSong = Html.Raw(sb.ToString());
+                }
+                @ddlClosingSong
                 <span asp-validation-for="Meeting.ClosingSong" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.ClosingPrayer" class="control-label"></label>
-                <input asp-for="Meeting.ClosingPrayer" class="form-control" />
+                <input asp-for="Meeting.ClosingPrayer" class="form-control" disabled="disabled" />
+                @{
+                    sb.Clear();
+                    sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_ClosingPrayer\" name=\"Meeting.ClosingPrayer\">");
+                    cmd.Connection = con;
+                    con.Open();
+                    cmd.CommandText = @"
+                                                select      *
+                                                from        [dbo].[WardMember]
+                                                order by    LastName
+                            ";
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        sb.Append("<option value=\"" + reader["FirstName"].ToString() + " " + reader["LastName"].ToString() + "\">" + reader["FirstName"].ToString() + " " + reader["LastName"].ToString() + "</option>");
+                    }
+                    reader.Close();
+                    con.Close();
+                    sb.Append("</select>");
+                    var ddlClosingPrayer = Html.Raw(sb.ToString());
+                }
+                @ddlClosingPrayer
                 <span asp-validation-for="Meeting.ClosingPrayer" class="text-danger"></span>
             </div>
             <div class="form-group">
