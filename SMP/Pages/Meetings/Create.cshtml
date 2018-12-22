@@ -25,7 +25,17 @@
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="Meeting.Bishopric" class="control-label"></label>
+                        <label asp-for="Meeting.DateUpdated" class="control-label"></label>
+                        <input asp-for="Meeting.DateUpdated" class="form-control" value="@DateTime.Now" type="datetime-local" disabled="disabled" />
+                        <span asp-validation-for="Meeting.DateUpdated" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Meeting.MeetingDate" class="control-label"></label>
+                        <input asp-for="Meeting.MeetingDate" class="form-control" type="date" />
+                        <span asp-validation-for="Meeting.MeetingDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Presiding</label>
                         @{
                             sb.Clear();
                             sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_Bishopric\" name=\"Meeting.Bishopric\">");
@@ -34,11 +44,11 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                        select      *
-                                                        from        [dbo].[WardMember]
-                                                        where       IsBishopricMember = 'Yes'
-                                                        order by    LastName
-                                    ";
+                                                                select      *
+                                                                from        [dbo].[WardMember]
+                                                                where       IsBishopricMember = 'Yes'
+                                                                order by    LastName
+                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -61,10 +71,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                        select      *
-                                                        from        [dbo].[WardMember]
-                                                        order by    LastName
-                                    ";
+                                                                select      *
+                                                                from        [dbo].[WardMember]
+                                                                order by    LastName
+                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -79,16 +89,6 @@
                         <span asp-validation-for="Meeting.OpeningPrayer" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Meeting.DateUpdated" class="control-label"></label>
-                        <input asp-for="Meeting.DateUpdated" class="form-control" value="@DateTime.Now" type="datetime-local" disabled="disabled" />
-                        <span asp-validation-for="Meeting.DateUpdated" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Meeting.MeetingDate" class="control-label"></label>
-                        <input asp-for="Meeting.MeetingDate" class="form-control" type="date" />
-                        <span asp-validation-for="Meeting.MeetingDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
                         <label asp-for="Meeting.OpeningSong" class="control-label"></label>
                         @{
                             sb.Clear();
@@ -96,10 +96,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                        select      *
-                                                        from        [dbo].[Hymn]
-                                                        order by    Number
-                                    ";
+                                                                select      *
+                                                                from        [dbo].[Hymn]
+                                                                order by    Number
+                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -121,10 +121,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                        select      *
-                                                        from        [dbo].[Hymn]
-                                                        order by    Number
-                                    ";
+                                                                select      *
+                                                                from        [dbo].[Hymn]
+                                                                order by    Number
+                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -176,10 +176,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                        select      *
-                                                        from        [dbo].[WardMember]
-                                                        order by    LastName
-                                    ";
+                                                                select      *
+                                                                from        [dbo].[WardMember]
+                                                                order by    LastName
+                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -194,31 +194,6 @@
                         <span asp-validation-for="Meeting.Speaker2" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Meeting.IntermediateSong" class="control-label"></label>
-                        @{
-                            sb.Clear();
-                            sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_IntermediateSong\" name=\"Meeting.IntermediateSong\">");
-                            cmd.Connection = con;
-                            con.Open();
-                            cmd.CommandText = @"
-                                                        select      *
-                                                        from        [dbo].[Hymn]
-                                                        order by    Number
-                                    ";
-                            reader = cmd.ExecuteReader();
-                            while (reader.Read())
-                            {
-                                sb.Append("<option value=\"" + reader["Title"].ToString() + "\">" + reader["Number"].ToString() + ". " + reader["Title"].ToString() + "</option>");
-                            }
-                            reader.Close();
-                            con.Close();
-                            sb.Append("</select>");
-                            var ddlIntermediateSong = Html.Raw(sb.ToString());
-                        }
-                        @ddlIntermediateSong
-                        <span asp-validation-for="Meeting.IntermediateSong" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
                         <label asp-for="Meeting.Speaker3" class="control-label"></label>
                         @{
                             sb.Clear();
@@ -226,10 +201,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                        select      *
-                                                        from        [dbo].[WardMember]
-                                                        order by    LastName
-                                    ";
+                                                                select      *
+                                                                from        [dbo].[WardMember]
+                                                                order by    LastName
+                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
