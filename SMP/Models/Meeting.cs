@@ -10,7 +10,7 @@ namespace SMP.Models
     {
         public int ID { get; set; }
 
-        
+        [Required]
         public string Bishopric { get; set; }
 
         [Required]
@@ -40,7 +40,8 @@ namespace SMP.Models
         public string Speaker1 { get; set; }
 
         [Required]
-        [Display(Name = "First Subject")]
+        [RegularExpression(@"^[0-9A-Za-z\s\-]+$")]
+        [Display(Name = "Subject")]
         // so does this
         public string Subject1 { get; set; }
 

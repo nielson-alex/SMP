@@ -60,10 +60,10 @@
                                     @Html.DisplayFor(modelItem => item.Bishopric)
                                 </td>
                                 <td>
-                                    Opening: <br>
+                                    <b>Opening:</b> <br>
                                     @Html.DisplayFor(modelItem => item.OpeningPrayer)
                                     <br><br>
-                                    Closing:<br>
+                                    <b>Closing:</b><br>
                                     @Html.DisplayFor(modelItem => item.ClosingPrayer)
                                 </td>
                                 <td>
@@ -79,13 +79,20 @@
                                     @Html.DisplayFor(modelItem => item.Subject1)
                                 </td>
                                 <td>
-                                    Opening:<br>
+                                    <b>Opening:</b><br>
                                     @Html.DisplayFor(modelItem => item.OpeningSong)
                                     <br><br>
-                                    Sacrament:<br>
+                                    <b>Sacrament:</b><br>
                                     @Html.DisplayFor(modelItem => item.SacramentSong)
                                     <br><br>
-                                    Closing:<br>
+                                    @if (!(item.IntermediateSong == null))
+                                    {
+
+                                        <p><b>Intermediate:</b></p>                                   
+                                        @Html.DisplayFor(modelItem => item.ClosingSong)
+                                        <br /><br />
+                                    }
+                                    <b>Closing:</b><br>
                                     @Html.DisplayFor(modelItem => item.ClosingSong)
                                 </td>
                                 <td>

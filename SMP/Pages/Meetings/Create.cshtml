@@ -44,11 +44,11 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                                select      *
-                                                                from        [dbo].[WardMember]
-                                                                where       IsBishopricMember = 'Yes'
-                                                                order by    LastName
-                                            ";
+                                                                                select      *
+                                                                                from        [dbo].[WardMember]
+                                                                                where       IsBishopricMember = 'Yes'
+                                                                                order by    LastName
+                                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -71,10 +71,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                                select      *
-                                                                from        [dbo].[WardMember]
-                                                                order by    LastName
-                                            ";
+                                                                                select      *
+                                                                                from        [dbo].[WardMember]
+                                                                                order by    LastName
+                                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -96,10 +96,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                                select      *
-                                                                from        [dbo].[Hymn]
-                                                                order by    Number
-                                            ";
+                                                                                select      *
+                                                                                from        [dbo].[Hymn]
+                                                                                order by    Number
+                                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -121,10 +121,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                                select      *
-                                                                from        [dbo].[Hymn]
-                                                                order by    Number
-                                            ";
+                                                                                select      *
+                                                                                from        [dbo].[Hymn]
+                                                                                order by    Number
+                                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -146,10 +146,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                                select      *
-                                                                from        [dbo].[WardMember]
-                                                                order by    LastName
-                                            ";
+                                                                                select      *
+                                                                                from        [dbo].[WardMember]
+                                                                                order by    LastName
+                                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -169,6 +169,31 @@
                         <span asp-validation-for="Meeting.Subject1" class="text-danger"></span>
                     </div>
                     <div class="form-group">
+                        <label asp-for="Meeting.IntermediateSong" class="control-label"></label>
+                        @{
+                            sb.Clear();
+                            sb.Append("<select class=\"form-control\" type=\"text\" id=\"Meeting_IntermediateSong\" name=\"Meeting.IntermediateSong\">");
+                            cmd.Connection = con;
+                            con.Open();
+                            cmd.CommandText = @"
+                                                                                                select      *
+                                                                                                from        [dbo].[Hymn]
+                                                                                                order by    Number
+                                                                            ";
+                            reader = cmd.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                sb.Append("<option value=\"" + reader["Title"].ToString() + "\">" + reader["Number"].ToString() + ". " + reader["Title"].ToString() + "</option>");
+                            }
+                            reader.Close();
+                            con.Close();
+                            sb.Append("</select>");
+                            var ddlIntermediateSong = Html.Raw(sb.ToString());
+                        }
+                        @ddlIntermediateSong
+                        <span asp-validation-for="Meeting.IntermediateSong" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="Meeting.Speaker2" class="control-label"></label>
                         @{
                             sb.Clear();
@@ -176,10 +201,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                                select      *
-                                                                from        [dbo].[WardMember]
-                                                                order by    LastName
-                                            ";
+                                                                                select      *
+                                                                                from        [dbo].[WardMember]
+                                                                                order by    LastName
+                                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -201,10 +226,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                                select      *
-                                                                from        [dbo].[WardMember]
-                                                                order by    LastName
-                                            ";
+                                                                                select      *
+                                                                                from        [dbo].[WardMember]
+                                                                                order by    LastName
+                                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -226,10 +251,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                                select      *
-                                                                from        [dbo].[Hymn]
-                                                                order by    Number
-                                            ";
+                                                                                select      *
+                                                                                from        [dbo].[Hymn]
+                                                                                order by    Number
+                                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
@@ -251,10 +276,10 @@
                             cmd.Connection = con;
                             con.Open();
                             cmd.CommandText = @"
-                                                                select      *
-                                                                from        [dbo].[WardMember]
-                                                                order by    LastName
-                                            ";
+                                                                                select      *
+                                                                                from        [dbo].[WardMember]
+                                                                                order by    LastName
+                                                            ";
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
